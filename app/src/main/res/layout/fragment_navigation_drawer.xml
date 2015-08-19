@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                android:background="@color/accentColor4"
+             tools:context="com.alexlowe.materialtest.NavigationDrawerFragment">
+
+    <ImageView
+        android:id="@+id/nav_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_abstract"
+        android:scaleType="fitXY"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_image">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

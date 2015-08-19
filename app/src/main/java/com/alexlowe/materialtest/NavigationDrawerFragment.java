@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,14 +24,17 @@ import android.view.ViewGroup;
  */
 public class NavigationDrawerFragment extends Fragment {
 
+    private RecyclerView mRecylerView;
+
     public static final String PREF_FILE_NAME ="testpref";
     public static final String KEY_USER_DRAWER_AWARE ="user_drawer_aware";
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-
+    private VivzAdapter adapter;
     private boolean mUserDrawerAware;
     private View containerView;
     private  boolean mFromSavedInstanceState;
+
     public NavigationDrawerFragment() {
         // Required empty public constructor
     }
@@ -44,7 +52,30 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        //made variable so that I can add elements to it
+        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        mRecylerView = (RecyclerView) layout.findViewById(R.id.drawer_list);
+        adapter = new VivzAdapter(getActivity(), getData());
+        mRecylerView.setAdapter(adapter);
+        mRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return layout;
+    }
+
+    public static List<Item> getData(){
+        List<Item> data = new ArrayList<>();
+        int[] icons = {R.drawable.ic_number1, R.drawable.ic_number2, R.drawable.ic_number3,
+                R.drawable.ic_number1};
+        String[] titles = {"Mario","Pat","Mike","Rob"};
+
+        for (int i = 0; i < titles.length && i < icons.length; i++){
+            Item current = new Item();
+            current.setTitle(titles[i]);
+            current.setIconId(icons[i]);
+
+            data.add(current);
+        }
+
+        return data;
     }
 
 
@@ -71,13 +102,13 @@ public class NavigationDrawerFragment extends Fragment {
                 getActivity().invalidateOptionsMenu();
             }
 
-            @Override
+            /*@Override  took out b/c this stops hamburger animation
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 if(slideOffset < 0.6) {
                     //makes rest of the app darken based on how far the toolbar is pulled out
                     toolbar.setAlpha(1 - slideOffset);
                 }
-            }
+            }*/
         };
         //check if drawer is being created for the first time
         if(!mUserDrawerAware && !mFromSavedInstanceState){
