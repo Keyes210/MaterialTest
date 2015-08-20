@@ -64,13 +64,13 @@ public class NavigationDrawerFragment extends Fragment {
     public static List<Item> getData(){
         List<Item> data = new ArrayList<>();
         int[] icons = {R.drawable.ic_number1, R.drawable.ic_number2, R.drawable.ic_number3,
-                R.drawable.ic_number1};
+                R.drawable.ic_number4};
         String[] titles = {"Mario","Pat","Mike","Rob"};
 
-        for (int i = 0; i < titles.length && i < icons.length; i++){
+        for (int i = 0; i < 100 /*titles.length && i < icons.length*/; i++){
             Item current = new Item();
-            current.setTitle(titles[i]);
-            current.setIconId(icons[i]);
+            current.setTitle(titles[i % titles.length]); //pretty nifty
+            current.setIconId(icons[i % icons.length]); //% part is to use 4 items again and again
 
             data.add(current);
         }
